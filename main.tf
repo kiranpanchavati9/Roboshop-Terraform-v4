@@ -33,19 +33,20 @@ resource "digitalocean_droplet" "instances" {
 resource "digitalocean_firewall" "firewallrecords" {
   for_each = var.components
 
-name = "${each.key}-fw"
+  name = "${each.key}-fw"
 
-droplet_ids = [digitalocean_droplet.instances[each.key].id]
+  droplet_ids = [digitalocean_droplet.instances[each.key].id]
 
-inbound_rule {
-  protocol         = var.protocol
-  port_range       = var.port_range
-  source_addresses = var.source_address
-}
+  inbound_rule {
+    protocol         = var.protocol
+    port_range       = var.port_range
+    source_addresses = var.source_address
+  }
 
-outbound_rule {
-  protocol              = var.protocol
-  port_range            = var.port_range
-  destination_addresses = var.destination_addresses
+  outbound_rule {
+    protocol              = var.protocol
+    port_range            = var.port_range
+    destination_addresses = var.destination_addresses
+  }
 }
-}
+# End
